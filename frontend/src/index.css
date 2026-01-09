@@ -1,0 +1,323 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 2%;
+    --foreground: 120 100% 80%;
+
+    --card: 0 0% 4%;
+    --card-foreground: 120 100% 80%;
+
+    --popover: 0 0% 4%;
+    --popover-foreground: 120 100% 80%;
+
+    --primary: 153 100% 50%;
+    --primary-foreground: 0 0% 2%;
+
+    --secondary: 0 0% 8%;
+    --secondary-foreground: 120 100% 80%;
+
+    --muted: 0 0% 10%;
+    --muted-foreground: 120 20% 50%;
+
+    --accent: 187 100% 50%;
+    --accent-foreground: 0 0% 2%;
+
+    --destructive: 340 100% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --warning: 38 100% 50%;
+    --warning-foreground: 0 0% 2%;
+
+    --success: 153 100% 50%;
+    --success-foreground: 0 0% 2%;
+
+    --border: 120 100% 20%;
+    --input: 0 0% 8%;
+    --ring: 153 100% 50%;
+
+    --radius: 0.25rem;
+
+    /* Custom cyberpunk tokens */
+    --neon-green: 153 100% 50%;
+    --neon-cyan: 187 100% 50%;
+    --neon-pink: 340 100% 50%;
+    --neon-amber: 38 100% 50%;
+    --matrix-green: 120 100% 40%;
+    --terminal-bg: 0 0% 2%;
+    --terminal-text: 120 100% 80%;
+
+    /* Glow effects */
+    --glow-green: 0 0 20px hsl(153 100% 50% / 0.5), 0 0 40px hsl(153 100% 50% / 0.3);
+    --glow-cyan: 0 0 20px hsl(187 100% 50% / 0.5), 0 0 40px hsl(187 100% 50% / 0.3);
+    --glow-pink: 0 0 20px hsl(340 100% 50% / 0.5), 0 0 40px hsl(340 100% 50% / 0.3);
+    --glow-amber: 0 0 20px hsl(38 100% 50% / 0.5), 0 0 40px hsl(38 100% 50% / 0.3);
+
+    --sidebar-background: 0 0% 4%;
+    --sidebar-foreground: 120 100% 80%;
+    --sidebar-primary: 153 100% 50%;
+    --sidebar-primary-foreground: 0 0% 2%;
+    --sidebar-accent: 0 0% 8%;
+    --sidebar-accent-foreground: 120 100% 80%;
+    --sidebar-border: 120 100% 20%;
+    --sidebar-ring: 153 100% 50%;
+  }
+
+  .light {
+    --background: 60 10% 95%;
+    --foreground: 0 0% 10%;
+
+    --card: 60 10% 98%;
+    --card-foreground: 0 0% 10%;
+
+    --popover: 60 10% 98%;
+    --popover-foreground: 0 0% 10%;
+
+    --primary: 153 80% 35%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 60 5% 90%;
+    --secondary-foreground: 0 0% 10%;
+
+    --muted: 60 5% 85%;
+    --muted-foreground: 0 0% 40%;
+
+    --accent: 187 80% 40%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 340 80% 45%;
+    --destructive-foreground: 0 0% 100%;
+
+    --warning: 38 90% 45%;
+    --warning-foreground: 0 0% 100%;
+
+    --success: 153 80% 35%;
+    --success-foreground: 0 0% 100%;
+
+    --border: 60 10% 80%;
+    --input: 60 5% 90%;
+    --ring: 153 80% 35%;
+
+    --neon-green: 153 80% 35%;
+    --neon-cyan: 187 80% 40%;
+    --neon-pink: 340 80% 45%;
+    --neon-amber: 38 90% 45%;
+    --matrix-green: 120 60% 30%;
+    --terminal-bg: 60 10% 95%;
+    --terminal-text: 0 0% 10%;
+
+    --glow-green: 0 0 10px hsl(153 80% 35% / 0.3);
+    --glow-cyan: 0 0 10px hsl(187 80% 40% / 0.3);
+    --glow-pink: 0 0 10px hsl(340 80% 45% / 0.3);
+    --glow-amber: 0 0 10px hsl(38 90% 45% / 0.3);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-mono antialiased;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  /* Scan-line effect */
+  .scanlines {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scanlines::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      hsl(var(--foreground) / 0.03) 2px,
+      hsl(var(--foreground) / 0.03) 4px
+    );
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  /* Noise texture overlay */
+  .noise-overlay {
+    position: relative;
+  }
+
+  .noise-overlay::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 5;
+    opacity: 0.1;
+  }
+
+  /* Grid background */
+  .grid-bg {
+    background-image: 
+      linear-gradient(hsl(var(--border) / 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--border) / 0.1) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* Neon glow effects */
+  .glow-green {
+    box-shadow: var(--glow-green);
+  }
+
+  .glow-cyan {
+    box-shadow: var(--glow-cyan);
+  }
+
+  .glow-pink {
+    box-shadow: var(--glow-pink);
+  }
+
+  .glow-amber {
+    box-shadow: var(--glow-amber);
+  }
+
+  /* Text glow */
+  .text-glow-green {
+    text-shadow: 0 0 10px hsl(var(--neon-green) / 0.8), 0 0 20px hsl(var(--neon-green) / 0.5);
+  }
+
+  .text-glow-cyan {
+    text-shadow: 0 0 10px hsl(var(--neon-cyan) / 0.8), 0 0 20px hsl(var(--neon-cyan) / 0.5);
+  }
+
+  .text-glow-pink {
+    text-shadow: 0 0 10px hsl(var(--neon-pink) / 0.8), 0 0 20px hsl(var(--neon-pink) / 0.5);
+  }
+
+  /* Pixelated border */
+  .pixelated-border {
+    border: 2px solid hsl(var(--border));
+    box-shadow: 
+      inset 0 0 0 1px hsl(var(--border) / 0.5),
+      0 0 0 1px hsl(var(--border) / 0.3);
+  }
+
+  /* Terminal cursor blink */
+  .cursor-blink {
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  /* Pulse animation */
+  .pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { 
+      box-shadow: 0 0 5px hsl(var(--primary) / 0.5), 0 0 20px hsl(var(--primary) / 0.3);
+    }
+    50% { 
+      box-shadow: 0 0 20px hsl(var(--primary) / 0.8), 0 0 40px hsl(var(--primary) / 0.5);
+    }
+  }
+
+  /* Shake animation */
+  .shake {
+    animation: shake 0.5s ease-in-out;
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+  }
+
+  /* Typing animation */
+  .typing {
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typing 0.5s steps(20);
+  }
+
+  @keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+
+  /* Glitch effect */
+  .glitch {
+    animation: glitch 0.3s ease-in-out;
+  }
+
+  @keyframes glitch {
+    0% { transform: translate(0); filter: hue-rotate(0deg); }
+    20% { transform: translate(-5px, 5px); filter: hue-rotate(90deg); }
+    40% { transform: translate(-5px, -5px); filter: hue-rotate(180deg); }
+    60% { transform: translate(5px, 5px); filter: hue-rotate(270deg); }
+    80% { transform: translate(5px, -5px); filter: hue-rotate(360deg); }
+    100% { transform: translate(0); filter: hue-rotate(0deg); }
+  }
+
+  /* Matrix rain character */
+  .matrix-char {
+    font-family: 'JetBrains Mono', monospace;
+    color: hsl(var(--matrix-green));
+    text-shadow: 0 0 10px hsl(var(--matrix-green));
+  }
+
+  /* Hexagonal button */
+  .hex-button {
+    clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0% 50%);
+  }
+
+  /* Progress bar glow */
+  .progress-glow {
+    box-shadow: 0 0 10px hsl(var(--primary) / 0.5);
+  }
+
+  /* Card hover lift */
+  .card-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .card-lift:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 10px 40px hsl(var(--primary) / 0.2);
+  }
+
+  /* Focus ring */
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .scanlines::before,
+    .noise-overlay::after {
+      display: none;
+    }
+    
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
